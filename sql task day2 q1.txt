@@ -1,0 +1,137 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 5.5.27 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use student;
+Database changed
+mysql> select * from emp;
+ERROR 1146 (42S02): Table 'student.emp' doesn't exist
+mysql> select * from student;
++------+--------+--------+-------+-------+
+| id   | name   | city   | marks | grade |
++------+--------+--------+-------+-------+
+|    1 | rahul  | delhi  |    72 | B     |
+|    2 | priya  | mumbai |    91 | A     |
+|    3 | arjun  | delhi  |    38 | F     |
+|    4 | sneha  | pune   |    85 | A     |
+|    5 | vikram | mumbai |    55 | C     |
+|    6 | anita  | delhi  |    94 | A     |
+|    7 | rohan  | pune   |    43 | F     |
++------+--------+--------+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student where marks city='delhi' order by marks desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'city='delhi' order by marks desc' at line 1
+mysql> select * from student where city='delhi' order by marks desc;
++------+-------+-------+-------+-------+
+| id   | name  | city  | marks | grade |
++------+-------+-------+-------+-------+
+|    6 | anita | delhi |    94 | A     |
+|    1 | rahul | delhi |    72 | B     |
+|    3 | arjun | delhi |    38 | F     |
++------+-------+-------+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where marks>80;
++------+-------+--------+-------+-------+
+| id   | name  | city   | marks | grade |
++------+-------+--------+-------+-------+
+|    2 | priya | mumbai |    91 | A     |
+|    4 | sneha | pune   |    85 | A     |
+|    6 | anita | delhi  |    94 | A     |
++------+-------+--------+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where limit 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 3' at line 1
+mysql> select * from student where name limit 3;
+Empty set, 7 warnings (0.00 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+-------+
+| id   | name   | city   | marks | grade |
++------+--------+--------+-------+-------+
+|    1 | rahul  | delhi  |    72 | B     |
+|    2 | priya  | mumbai |    91 | A     |
+|    3 | arjun  | delhi  |    38 | F     |
+|    4 | sneha  | pune   |    85 | A     |
+|    5 | vikram | mumbai |    55 | C     |
+|    6 | anita  | delhi  |    94 | A     |
+|    7 | rohan  | pune   |    43 | F     |
++------+--------+--------+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student limit 3;
++------+-------+--------+-------+-------+
+| id   | name  | city   | marks | grade |
++------+-------+--------+-------+-------+
+|    1 | rahul | delhi  |    72 | B     |
+|    2 | priya | mumbai |    91 | A     |
+|    3 | arjun | delhi  |    38 | F     |
++------+-------+--------+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select city from student limit 3;
++--------+
+| city   |
++--------+
+| delhi  |
+| mumbai |
+| delhi  |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select city from student;
++--------+
+| city   |
++--------+
+| delhi  |
+| mumbai |
+| delhi  |
+| pune   |
+| mumbai |
+| delhi  |
+| pune   |
++--------+
+7 rows in set (0.00 sec)
+
+mysql> select city,city(mumbai) from student where marks>=55;
+ERROR 1305 (42000): FUNCTION student.city does not exist
+mysql> select city,city=mumbai from student where marks>=55;
+ERROR 1054 (42S22): Unknown column 'mumbai' in 'field list'
+mysql> select * from student where city(mumbai,pune) marks>=55;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'marks>=55' at line 1
+mysql> select * from student where city='mumbai' marks>=55;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'marks>=55' at line 1
+mysql> select * from student where city='mumbai' where marks>=55;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where marks>=55' at line 1
+mysql> select * from student where marks>=55;
++------+--------+--------+-------+-------+
+| id   | name   | city   | marks | grade |
++------+--------+--------+-------+-------+
+|    1 | rahul  | delhi  |    72 | B     |
+|    2 | priya  | mumbai |    91 | A     |
+|    4 | sneha  | pune   |    85 | A     |
+|    5 | vikram | mumbai |    55 | C     |
+|    6 | anita  | delhi  |    94 | A     |
++------+--------+--------+-------+-------+
+5 rows in set (0.02 sec)
+
+mysql> select * from student where city in('mumbai','pune') and marks>=55;
++------+--------+--------+-------+-------+
+| id   | name   | city   | marks | grade |
++------+--------+--------+-------+-------+
+|    2 | priya  | mumbai |    91 | A     |
+|    4 | sneha  | pune   |    85 | A     |
+|    5 | vikram | mumbai |    55 | C     |
++------+--------+--------+-------+-------+
+3 rows in set (0.00 sec)
