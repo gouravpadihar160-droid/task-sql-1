@@ -1,0 +1,113 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 24
+Server version: 5.5.27 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use student;
+Database changed
+mysql> select * from student;
++------+--------+--------+-------+-------+
+| id   | name   | city   | marks | grade |
++------+--------+--------+-------+-------+
+|    1 | rahul  | delhi  |    72 | B     |
+|    2 | priya  | mumbai |    91 | A     |
+|    3 | arjun  | delhi  |    38 | F     |
+|    4 | sneha  | pune   |    85 | A     |
+|    5 | vikram | mumbai |    55 | C     |
+|    6 | anita  | delhi  |    94 | A     |
+|    7 | rohan  | pune   |    43 | F     |
++------+--------+--------+-------+-------+
+7 rows in set (0.01 sec)
+
+mysql> select city from student group by city;
++--------+
+| city   |
++--------+
+| delhi  |
+| mumbai |
+| pune   |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select city,count(city) from student group by city;
++--------+-------------+
+| city   | count(city) |
++--------+-------------+
+| delhi  |           3 |
+| mumbai |           2 |
+| pune   |           2 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select grade,avg(marks) from student group by grade;
++-------+------------+
+| grade | avg(marks) |
++-------+------------+
+| A     |    90.0000 |
+| B     |    72.0000 |
+| C     |    55.0000 |
+| F     |    40.5000 |
++-------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select city,count(city) from student;
++-------+-------------+
+| city  | count(city) |
++-------+-------------+
+| delhi |           7 |
++-------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select city,count(city) from student group by city;
++--------+-------------+
+| city   | count(city) |
++--------+-------------+
+| delhi  |           3 |
+| mumbai |           2 |
+| pune   |           2 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select city,count(city) from student group by city>3;
++-------+-------------+
+| city  | count(city) |
++-------+-------------+
+| delhi |           7 |
++-------+-------------+
+1 row in set, 8 warnings (0.00 sec)
+
+mysql> select city,count(city) from student group by city limit 1;
++-------+-------------+
+| city  | count(city) |
++-------+-------------+
+| delhi |           3 |
++-------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select city,count(city) from student group by more than 2 student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'than 2 student' at line 1
+mysql> select city,count(city) from student group by city having count(*)>2;
++-------+-------------+
+| city  | count(city) |
++-------+-------------+
+| delhi |           3 |
++-------+-------------+
+1 row in set (0.07 sec)
+
+mysql> select city,max(marks) from student group by city;
++--------+------------+
+| city   | max(marks) |
++--------+------------+
+| delhi  |         94 |
+| mumbai |         91 |
+| pune   |         85 |
++--------+------------+
+3 rows in set (0.00 sec)
